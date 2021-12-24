@@ -20,6 +20,18 @@ $(document).ready(function(){
 	  return this;
 	};
 
+
+    //button up scroll
+    if ($(window).scrollTop() >= "250") $(".js-btn-up").fadeIn("slow");
+    $(window).scroll(function () {
+        if ($(window).scrollTop() <= "250") $(".js-btn-up").fadeOut("slow")
+        else $(".js-btn-up").fadeIn("slow");
+    });
+    $(".js-btn-up").click(function () {
+        $("html,body").animate({scrollTop: 0}, "slow");
+        return false;
+    })
+
 	//popup block
 	$('.js-popup-wrap .js-btn-toggle').on('click', function() {
 		if ($(this).hasClass('active')) {
@@ -100,6 +112,54 @@ $(document).ready(function(){
 			$(this).addClass('active').next('.js-tab-content').slideDown(200);
 		}
 	})
+
+
+    //animate anchor scroll
+    $('.main-menu-wrap li a[href^="#"]').on("click", function (e) {
+        $('.main-menu-wrap .js-btn-toggle').removeClass('active');
+        let anchor = $(this);
+        $('html, body').stop().animate({
+            scrollTop: $(anchor.attr('href')).offset().top
+        }, 1000);
+        e.preventDefault();
+        return false;
+    });
+    
+
+    //main-gallery-box
+    if (!!$('.main-gallery-box').offset()) {
+        $('.main-gallery-box .slider').slick({
+            dots: false,
+            slidesToShow: 1,
+            variableWidth: false,
+            infinite: true,
+            adaptiveHeight: false,
+            prevArrow: '<span class="btn-action-ico ico-arrow ico-arrow-light ico-arrow-prev"></span>',
+            nextArrow: '<span class="btn-action-ico ico-arrow ico-arrow-light ico-arrow-next"></span>',
+        });
+    }
+
+
+    //main-logos-box
+    if (!!$('.main-logos-box').offset()) {
+        $('.main-logos-box .slider').slick({
+            dots: false,
+            slidesToShow: 5,
+            variableWidth: false,
+            infinite: true,
+            adaptiveHeight: false,
+            prevArrow: '<span class="btn-action-ico ico-arrow ico-arrow-prev"></span>',
+            nextArrow: '<span class="btn-action-ico ico-arrow ico-arrow-next"></span>',
+            responsive: [
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 3,
+                    }
+                },
+            ]
+        });
+    }
 	
 });
 
